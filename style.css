@@ -1,0 +1,12 @@
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title-input {
+  border: none;
+  height: 60px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 24px;
+}
