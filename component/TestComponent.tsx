@@ -8,32 +8,8 @@ import { useMemo, useRef } from "react";
 import { useEditorStore } from "@/store/editorStore";
 import { useRouter } from "next/navigation";
 
-const colors = [
-  "transparent",
-  "white",
-  "red",
-  "yellow",
-  "green",
-  "blue",
-  "purple",
-  "gray",
-  "black",
-];
-const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "color",
-  "image",
-  "background",
-  "align",
-];
+const colors = ["transparent", "white", "red", "yellow", "green", "blue", "purple", "gray", "black"];
+const formats = ["header", "bold", "italic", "underline", "strike", "blockquote", "list", "bullet", "link", "color", "image", "background", "align"];
 
 const TestComponent = dynamic(
   async () => {
@@ -70,22 +46,17 @@ const TestComponent = dynamic(
         []
       );
 
-      const handleImageChange = async (
-        e: React.ChangeEvent<HTMLInputElement>
-      ) => {
+      const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
           const formData = new FormData();
           formData.append("file", file);
 
           try {
-            const response = await fetch(
-              "http://43.203.231.182:5000/api/img/",
-              {
-                method: "POST",
-                body: formData,
-              }
-            );
+            const response = await fetch("https://w-test.store/api/img/", {
+              method: "POST",
+              body: formData,
+            });
 
             if (response.ok) {
               const data = await response.json();
@@ -106,19 +77,16 @@ const TestComponent = dynamic(
 
       const createContent = async () => {
         try {
-          const response = await fetch(
-            "http://43.203.231.182:5000/api/contents/",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title: editorTitle,
-                content: editorContent,
-              }),
-            }
-          );
+          const response = await fetch("https://w-test.store/api/contents/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: editorTitle,
+              content: editorContent,
+            }),
+          });
 
           if (response.ok) {
             const data = await response.json();
@@ -143,21 +111,8 @@ const TestComponent = dynamic(
             className="title-input"
             placeholder="제목"
           />
-          <input
-            type="file"
-            ref={fileInput}
-            accept="image/*"
-            hidden
-            onChange={handleImageChange}
-          />
-          <QuillComponent
-            ref={quillRef}
-            formats={formats}
-            modules={modules}
-            value={editorContent}
-            onChange={updateContent}
-            {...props}
-          />
+          <input type="file" ref={fileInput} accept="image/*" hidden onChange={handleImageChange} />
+          <QuillComponent ref={quillRef} formats={formats} modules={modules} value={editorContent} onChange={updateContent} {...props} />
           <button onClick={createContent}>글 등록</button>
         </>
       );

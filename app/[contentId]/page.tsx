@@ -1,14 +1,11 @@
 async function getData(contentId: string) {
   try {
-    const response = await fetch(
-      `http://43.203.231.182:5000/api/contents/${contentId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`https://w-test.store/api/contents/${contentId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (response.ok) {
       const data = await response.json();
@@ -20,11 +17,7 @@ async function getData(contentId: string) {
   return [];
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { contentId: string };
-}) {
+export default async function Page({ params }: { params: { contentId: string } }) {
   const data = await getData(params.contentId);
   return (
     <div className="page-container">
