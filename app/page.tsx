@@ -3,6 +3,7 @@ import Link from "next/link";
 async function getData() {
   try {
     const response = await fetch("https://w-test.store/api/contents/", {
+      cache: "no-store",
       method: "GET",
       headers: {
         "Content-Type": "application/json",

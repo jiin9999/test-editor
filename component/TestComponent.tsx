@@ -8,8 +8,32 @@ import { useMemo, useRef } from "react";
 import { useEditorStore } from "@/store/editorStore";
 import { useRouter } from "next/navigation";
 
-const colors = ["transparent", "white", "red", "yellow", "green", "blue", "purple", "gray", "black"];
-const formats = ["header", "bold", "italic", "underline", "strike", "blockquote", "list", "bullet", "link", "color", "image", "background", "align"];
+const colors = [
+  "transparent",
+  "white",
+  "red",
+  "yellow",
+  "green",
+  "blue",
+  "purple",
+  "gray",
+  "black",
+];
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "link",
+  "color",
+  "image",
+  "background",
+  "align",
+];
 
 const TestComponent = dynamic(
   async () => {
@@ -46,7 +70,9 @@ const TestComponent = dynamic(
         []
       );
 
-      const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const handleImageChange = async (
+        e: React.ChangeEvent<HTMLInputElement>
+      ) => {
         const file = e.target.files?.[0];
         if (file) {
           const formData = new FormData();
@@ -94,6 +120,7 @@ const TestComponent = dynamic(
             updateTitle("");
             updateContent("");
             router.push("/");
+            router.refresh();
           }
         } catch (error) {
           console.error(error);
@@ -111,8 +138,21 @@ const TestComponent = dynamic(
             className="title-input"
             placeholder="제목"
           />
-          <input type="file" ref={fileInput} accept="image/*" hidden onChange={handleImageChange} />
-          <QuillComponent ref={quillRef} formats={formats} modules={modules} value={editorContent} onChange={updateContent} {...props} />
+          <input
+            type="file"
+            ref={fileInput}
+            accept="image/*"
+            hidden
+            onChange={handleImageChange}
+          />
+          <QuillComponent
+            ref={quillRef}
+            formats={formats}
+            modules={modules}
+            value={editorContent}
+            onChange={updateContent}
+            {...props}
+          />
           <button onClick={createContent}>글 등록</button>
         </>
       );
